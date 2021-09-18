@@ -6,8 +6,10 @@ function update() {
 
 
 function draw() {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.drawImage(img1, 16, 16);
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    ctx.drawImage(carBlueSpr, 16, 16);
+    ctx.drawImage(carRedSpr, 48, 16);
 }
 
 

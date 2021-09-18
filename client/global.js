@@ -3,9 +3,8 @@ const ctx = canvas.getContext("2d")
 ctx.imageSmoothingEnabled = false
 ctx.webkitImageSmoothingEnabled = false
 
-
-
-
-// Testing draw car
-var img1 = new Image();
-img1.src = './client/assets/car_blue.png';
+// Car sprites
+var carBlueSpr = new Image();
+carBlueSpr.src = './client/assets/car_blue.png';
+var carRedSpr = new Image();
+carRedSpr.src = './client/assets/car_red.png';
