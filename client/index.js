@@ -19,6 +19,8 @@ socket.on('newPositions',function(data){
             player.pressingDown = data[i].pressingDown
             player.pressingLeft = data[i].pressingLeft
             player.pressingRight = data[i].pressingRight
+            player.speed = data[i].speed
+            player.acc = data[i].acc
         }
     }
 });

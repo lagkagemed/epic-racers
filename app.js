@@ -40,6 +40,9 @@ io.sockets.on('connection', function(socket){
     player.pressingLeft = false;
     player.pressingRight = false;
 
+    player.speed = 0;
+    player.acc = 0;
+
     SOCKET_LIST[socket.id] = socket;
     PLAYER_LIST[player.id] = player;
 
@@ -60,6 +63,9 @@ io.sockets.on('connection', function(socket){
             player.pressingLeft = data.pressingLeft;
             player.pressingRight = data.pressingRight;
 
+            player.speed = data.speed;
+            player.acc = data.acc;
+
             posPack.push({
                 x:player.x,
                 y:player.y,
@@ -68,7 +74,9 @@ io.sockets.on('connection', function(socket){
                 pressingUp:player.pressingUp,
                 pressingDown:player.pressingDown,
                 pressingLeft:player.pressingLeft,
-                pressingRight:player.pressingRight
+                pressingRight:player.pressingRight,
+                speed = player.speed,
+                acc = player.acc
             });
         }
     })
