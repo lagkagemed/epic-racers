@@ -3,6 +3,9 @@ const ctx = canvas.getContext("2d")
 ctx.imageSmoothingEnabled = false
 ctx.webkitImageSmoothingEnabled = false
 
+let wWIDTH = 0
+let wHEIGHT = 0
+
 let PLAYER_LIST = {}
 let myId = 0
 

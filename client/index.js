@@ -55,7 +55,28 @@ function drawCars() {
     }
 }
 
+function checkWindow() {
+    if (wWIDTH != window.innerWidth || wHEIGHT != window.innerHeight) {
+        wWIDTH = window.innerWidth
+        wHEIGHT = window.innerHeight
+
+        let canvasFact = wHEIGHT / 240
+
+        if (400 * canvasFact < wWIDTH) {
+            canvas.width = wWIDTH
+            canvasFact = wWIDTH / 400
+            canvas.height = 240 * canvasFact
+        } else {
+            canvas.height = wHEIGHT
+            canvas.width = 400 * canvasFact
+        }
+        
+        ctx.scale(canvasFact, canvasFact)
+    }
+}
+
 function update() {
+    checkWindow()
     checkKeyStates()
     updateKeyStates()
     sendInfo()
