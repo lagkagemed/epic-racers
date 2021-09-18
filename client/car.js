@@ -1,23 +1,23 @@
 const acc = 0.1;
-const accMax = 1;
+// const accMax = 1;
 const speedMax = 3;
 
 function carUpdate(player)
 {
     if (player.pressingUp)
     {
-        player.acc += acc;
-        if (player.acc > accMax) player.acc = accMax;
+        // player.acc += acc;
+        // if (player.acc > accMax) player.acc = accMax;
 
-        player.speed += player.acc;
+        player.speed += acc;
         if (player.speed > speedMax) player.speed = speedMax;
     }
     else if (player.pressingDown)
     {
-        player.acc -= acc;
-        if (player.acc < -accMax) player.acc = -accMax;
+        // player.acc -= acc;
+        // if (player.acc < -accMax) player.acc = -accMax;
 
-        player.speed += player.acc;
+        player.speed -= acc;
         if (player.speed < -speedMax) player.speed = -speedMax;
     }
     // else
@@ -36,7 +36,7 @@ function carUpdate(player)
     }
 
     // player.x = 
-    player.y += player.speed;
+    player.y -= player.speed;
 }
 
 function carDraw(player)
