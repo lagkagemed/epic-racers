@@ -76,6 +76,7 @@ io.sockets.on('connection', function(socket){
     socket.on('disconnect',function(){
         delete SOCKET_LIST[socket.id];
         delete PLAYER_LIST[player.id];
+        emitAll('playerUpdate', PLAYER_LIST)
         console.log('Socket disconnected');
     });
 });
