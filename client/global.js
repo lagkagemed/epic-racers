@@ -6,9 +6,9 @@ ctx.webkitImageSmoothingEnabled = false
 
 
 
-// // Testing draw car
-// var img1 = new Image();
-// img1.onload = function () {
-//     ctx.drawImage(img1, 16, 16);
-// };
-// img1.src = './client/assets/car_blue.png';
+// Testing draw car
+var img1 = new Image();
+img1.onload = function () {
+    ctx.drawImage(img1, 16, 16);
+};
+img1.src = './client/assets/car_blue.png';
