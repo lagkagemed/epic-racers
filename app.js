@@ -22,6 +22,8 @@ console.log('Server started.');
 let SOCKET_LIST = {}
 let PLAYER_LIST = {}
 
+let posPack = []
+
 let io = new Server(serv);
 
 io.sockets.on('connection', function(socket){
@@ -33,10 +35,43 @@ io.sockets.on('connection', function(socket){
     player.dir = 0
     player.id = socket.id
 
+    player.pressingUp = false;
+    player.pressingDown = false;
+    player.pressingLeft = false;
+    player.pressingRight = false;
+
     SOCKET_LIST[socket.id] = socket;
     PLAYER_LIST[player.id] = player;
 
     console.log('Socket connected!');
+
+    socket.emit('yourId', socket.id)
+    emitAll('playerUpdate', PLAYER_LIST)
+
+    socket.on('movement',function(data){
+        if (data != null) {
+            console.log(data)
+            player.x = data.x
+            player.y = data.y
+            player.dir = data.dir
+
+            player.pressingUp = data.pressingUp;
+            player.pressingDown = data.pressingDown;
+            player.pressingLeft = data.pressingLeft;
+            player.pressingRight = data.pressingRight;
+
+            posPack.push({
+                x:player.x,
+                y:player.y,
+                dir:player.dir,
+                id:player.id,
+                pressingUp:player.pressingUp,
+                pressingDown:player.pressingDown,
+                pressingLeft:player.pressingLeft,
+                pressingRight:player.pressingRight
+            });
+        }
+    })
 
     socket.on('disconnect',function(){
         delete SOCKET_LIST[socket.id];
@@ -44,3 +79,16 @@ io.sockets.on('connection', function(socket){
         console.log('Socket disconnected');
     });
 });
+
+function emitAll(msg, data) {
+    for (let i in SOCKET_LIST) {
+        let socket = SOCKET_LIST[i]
+        socket.emit(msg, data)
+    }
+}
+
+setInterval(function(){
+    if (posPack != []) emitAll('newPositions', posPack)
+
+    posPack = []
+},1000/25);

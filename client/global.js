@@ -3,6 +3,9 @@ const ctx = canvas.getContext("2d")
 ctx.imageSmoothingEnabled = false
 ctx.webkitImageSmoothingEnabled = false
 
+let PLAYER_LIST = {}
+let myId = 0
+
 // Car sprites
 var carBlueSpr = new Image();
 carBlueSpr.src = './client/assets/car_blue.png';
