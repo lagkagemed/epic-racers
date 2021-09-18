@@ -6,6 +6,8 @@ ctx.webkitImageSmoothingEnabled = false
 let PLAYER_LIST = {}
 let myId = 0
 
-// Testing draw car
-var img1 = new Image();
-img1.src = './client/assets/car_blue.png';
+// Car sprites
+var carBlueSpr = new Image();
+carBlueSpr.src = './client/assets/car_blue.png';
+var carRedSpr = new Image();
+carRedSpr.src = './client/assets/car_red.png';

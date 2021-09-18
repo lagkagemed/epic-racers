@@ -52,7 +52,7 @@ function updateSillyMovement() {
 function drawCars() {
     for (let i in PLAYER_LIST) {
         let player = PLAYER_LIST[i]
-        ctx.drawImage(img1, player.x, player.y);
+        ctx.drawImage(carBlueSpr, player.x, player.y);
     }
 }
 
