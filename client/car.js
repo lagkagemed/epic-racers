@@ -63,7 +63,7 @@ function carDraw(player)
 {
     ctx.translate(player.x, player.y);
     ctx.rotate(player.dir); // Angle in radians
-    ctx.drawImage(carBlueSpr, -carBlueSpr.width / 2, -carBlueSpr.height / 2);
+    if (player.id == myId) {ctx.drawImage(carBlueSpr, -carBlueSpr.width / 2, -carBlueSpr.height / 2)} else {ctx.drawImage(carRedSpr, -carBlueSpr.width / 2, -carBlueSpr.height / 2)}
     ctx.rotate(-player.dir); // Angle in radians
     ctx.translate(-player.x, -player.y);
 }
