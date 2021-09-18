@@ -75,8 +75,8 @@ io.sockets.on('connection', function(socket){
                 pressingDown:player.pressingDown,
                 pressingLeft:player.pressingLeft,
                 pressingRight:player.pressingRight,
-                speed = player.speed,
-                acc = player.acc
+                speed:player.speed,
+                acc:player.acc
             });
         }
     })
