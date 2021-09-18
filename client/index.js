@@ -6,7 +6,8 @@ function update() {
 
 
 function draw() {
-    //ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    ctx.drawImage(img1, 16, 16);
 }
 
 
