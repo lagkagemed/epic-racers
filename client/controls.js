@@ -74,7 +74,7 @@ function drag(e) {
         let touchX = e.touches[i].clientX
         let touchY = e.touches[i].clientY
 
-        if (touchX < (canvas.width / 2)) {
+        if (touchX < (wWIDTH / 2)) {
             pressingLeft = true;
             oldLeft = true;
         }
@@ -83,7 +83,7 @@ function drag(e) {
             oldRight = true;
         }
 
-        if (touchY < (canvas.height / 3 * 2)) {
+        if (touchY < (wHEIGHT / 3 * 2)) {
             pressingUp = true;
             oldUp = true;
         }
