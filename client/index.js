@@ -60,15 +60,15 @@ function checkWindow() {
         wWIDTH = window.innerWidth
         wHEIGHT = window.innerHeight
 
-        canvasFact = wHEIGHT / 240
+        canvasFact = wHEIGHT / gameH
 
-        if (400 * canvasFact < wWIDTH) {
+        if (gameW * canvasFact < wWIDTH) {
             canvas.width = wWIDTH
-            canvasFact = wWIDTH / 400
-            canvas.height = 240 * canvasFact
+            canvasFact = wWIDTH / gameW
+            canvas.height = gameH * canvasFact
         } else {
             canvas.height = wHEIGHT
-            canvas.width = 400 * canvasFact
+            canvas.width = gameW * canvasFact
         }
         
         ctx.scale(canvasFact, canvasFact)

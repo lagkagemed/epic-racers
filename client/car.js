@@ -5,18 +5,17 @@ function carUpdate(player)
     const speedForwardsMax = 3;
     const speedBackwardsMax = 1;
     const turnSpeed = 0.05;
-    const turnResistanceMax = 2;
 
     // Kør frem og tilbage
     if (player.pressingUp)
     {
-        player.speed += acc;
-        if (player.speed > speedForwardsMax) player.speed = speedForwardsMax;
+        if (player.speed < speedForwardsMax)
+            player.speed += acc;
     }
     else if (player.pressingDown)
     {
-        player.speed -= acc;
-        if (player.speed < -speedBackwardsMax) player.speed = -speedBackwardsMax;
+        if (player.speed > -speedBackwardsMax)
+            player.speed -= acc; 
     }
     else
     {
@@ -31,7 +30,7 @@ function carUpdate(player)
     // Drej
     if (player.speed < -acc || player.speed > acc)
     {
-        let turnResistance = turnResistanceMax - Math.abs(player.speed / speedForwardsMax);
+        let turnResistance = 2 - Math.abs(player.speed / speedForwardsMax);
     
         if (player.pressingLeft) 
         {
@@ -50,14 +49,14 @@ function carUpdate(player)
 
     /*
     // Wrap rundt når man kører ud af skærm
-    if (player.x > 400 + 16)
-        player.x -= 400 + 32;
+    if (player.x > gameW + 16)
+        player.x -= gameW + 32;
     if (player.x < 0 - 16)
-        player.x += 400 + 32;
-    if (player.y > 240 + 16)
-        player.y -= 240 + 32;
+        player.x += gameW + 32;
+    if (player.y > gameH + 16)
+        player.y -= gameH + 32;
     if (player.y < 0 - 16)
-        player.y += 240 + 32;
+        player.y += gameH + 32;
         */
 }
 
