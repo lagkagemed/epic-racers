@@ -75,8 +75,24 @@ function checkWindow() {
     }
 }
 
+function checkWindowKeepInside() {
+    if (wWIDTH != window.innerWidth || wHEIGHT != window.innerHeight) {
+        wWIDTH = window.innerWidth
+        wHEIGHT = window.innerHeight
+
+        // Forstørrer/formindsker så man hele tiden kan se hele canvasset på skærmen.
+        let scaleX = wWIDTH / 400;
+        let scaleY = wHEIGHT / 240;
+        let scaleMin = Math.min(scaleX, scaleY);
+        canvas.width = 400 * scaleMin;
+        canvas.height = 240 * scaleMin;
+        ctx.scale(scaleMin, scaleMin);
+    }
+}
+
 function update() {
-    checkWindow()
+    // checkWindow()
+    checkWindowKeepInside();
     checkKeyStates()
     updateKeyStates()
     sendInfo()
