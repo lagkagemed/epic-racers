@@ -80,13 +80,21 @@ function setOffset() {
     offsetY = PLAYER_LIST[myId].y - ((canvas.height / 2) / canvasFact)
 }
 
+function consoleLog() {
+    let pack = []
+
+    pack.push(sendNewInfo)
+
+    socket.emit('touch',pack)
+}
+
 function update() {
     checkWindow()
     setOffset()
     checkKeyStates()
     updateKeyStates()
     sendInfo()
-
+    //consoleLog()
     updateCars()
 }
 

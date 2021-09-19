@@ -54,6 +54,46 @@ function logKeyUp(e) {
 
 }
 
+canvas.addEventListener('touchstart', drag, false)
+canvas.addEventListener('touchend', drag, false)
+canvas.addEventListener('touchmove', drag, false)
+
+let oldUp = false
+let oldDown = false
+let oldLeft = false
+let oldRight = false
+
+function drag(e) {
+    e.preventDefault()
+    pressingUp = false
+    pressingDown = false
+    pressingLeft = false
+    pressingRight = false
+
+    for (let i = 0; i < e.touches.length; i++) {
+        let touchX = e.touches[i].clientX
+        let touchY = e.touches[i].clientY
+
+        if (touchX < (canvas.width / 2)) {
+            pressingLeft = true;
+            oldLeft = true;
+        }
+        else {
+            pressingRight = true;
+            oldRight = true;
+        }
+
+        if (touchY < (canvas.height / 3 * 2)) {
+            pressingUp = true;
+            oldUp = true;
+        }
+        else {
+            pressingDown = true
+            oldDown = true;
+        }
+    }
+}
+
 function checkKeyStates() {
     if (pressingUp && !haveSentUp) {
         sendNewInfo = true
@@ -73,6 +113,30 @@ function checkKeyStates() {
     if (pressingLeft && !haveSentLeft) {
         sendNewInfo = true
         haveSentLeft = true
+    }
+
+    if (oldUp && !pressingUp) {
+        oldUp = false
+        haveSentUp = false
+        sendNewInfo = true
+    }
+
+    if (oldDown && !pressingDown) {
+        oldDown = false
+        haveSentDown = false
+        sendNewInfo = true
+    }
+
+    if (oldLeft && !pressingLeft) {
+        oldLeft = false
+        haveSentLeft = false
+        sendNewInfo = true
+    }
+
+    if (oldRight && !pressingRight) {
+        oldRight = false
+        haveSentRight = false
+        sendNewInfo = true
     }
 
 }
