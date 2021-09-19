@@ -9,13 +9,13 @@ function carUpdate(player)
     // Kør frem og tilbage
     if (player.pressingUp)
     {
-        player.speed += acc;
-        if (player.speed > speedForwardsMax) player.speed = speedForwardsMax;
+        if (player.speed < speedForwardsMax)
+            player.speed += acc;
     }
     else if (player.pressingDown)
     {
-        player.speed -= acc;
-        if (player.speed < -speedBackwardsMax) player.speed = -speedBackwardsMax;
+        if (player.speed > -speedBackwardsMax)
+            player.speed -= acc; 
     }
     else
     {
