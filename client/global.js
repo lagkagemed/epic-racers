@@ -1,4 +1,9 @@
+let gameW = 400;
+let gameH = 240;
+
 const canvas = document.getElementById("canvas")
+canvas.width = gameW;
+canvas.height = gameH;
 const ctx = canvas.getContext("2d")
 ctx.imageSmoothingEnabled = false
 ctx.webkitImageSmoothingEnabled = false

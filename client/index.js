@@ -60,15 +60,15 @@ function checkWindow() {
         wWIDTH = window.innerWidth
         wHEIGHT = window.innerHeight
 
-        let canvasFact = wHEIGHT / 240
+        let canvasFact = wHEIGHT / gameH
 
-        if (400 * canvasFact < wWIDTH) {
+        if (gameW * canvasFact < wWIDTH) {
             canvas.width = wWIDTH
-            canvasFact = wWIDTH / 400
-            canvas.height = 240 * canvasFact
+            canvasFact = wWIDTH / gameW
+            canvas.height = gameH * canvasFact
         } else {
             canvas.height = wHEIGHT
-            canvas.width = 400 * canvasFact
+            canvas.width = gameW * canvasFact
         }
         
         ctx.scale(canvasFact, canvasFact)
@@ -81,11 +81,11 @@ function checkWindowKeepInside() {
         wHEIGHT = window.innerHeight
 
         // Forstørrer/formindsker så man hele tiden kan se hele canvasset på skærmen.
-        let scaleX = wWIDTH / 400;
-        let scaleY = wHEIGHT / 240;
+        let scaleX = wWIDTH / gameW;
+        let scaleY = wHEIGHT / gameH;
         let scaleMin = Math.min(scaleX, scaleY);
-        canvas.width = 400 * scaleMin;
-        canvas.height = 240 * scaleMin;
+        canvas.width = gameW * scaleMin;
+        canvas.height = gameH * scaleMin;
         ctx.scale(scaleMin, scaleMin);
     }
 }

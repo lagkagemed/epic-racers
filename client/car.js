@@ -48,14 +48,14 @@ function carUpdate(player)
     player.y += Math.sin(player.dir) * player.speed;
 
     // Wrap rundt når man kører ud af skærm
-    if (player.x > 400 + 16)
-        player.x -= 400 + 32;
+    if (player.x > gameW + 16)
+        player.x -= gameW + 32;
     if (player.x < 0 - 16)
-        player.x += 400 + 32;
-    if (player.y > 240 + 16)
-        player.y -= 240 + 32;
+        player.x += gameW + 32;
+    if (player.y > gameH + 16)
+        player.y -= gameH + 32;
     if (player.y < 0 - 16)
-        player.y += 240 + 32;
+        player.y += gameH + 32;
 }
 
 function carDraw(player)
