@@ -48,6 +48,7 @@ function carUpdate(player)
     player.x += Math.cos(player.dir) * player.speed;
     player.y += Math.sin(player.dir) * player.speed;
 
+    /*
     // Wrap rundt når man kører ud af skærm
     if (player.x > 400 + 16)
         player.x -= 400 + 32;
@@ -57,13 +58,16 @@ function carUpdate(player)
         player.y -= 240 + 32;
     if (player.y < 0 - 16)
         player.y += 240 + 32;
+        */
 }
 
 function carDraw(player)
 {
-    ctx.translate(player.x, player.y);
+    let playerOffsetX = player.x + (offsetX * -1)
+    let playerOffsetY = player.y + (offsetY * -1)
+    ctx.translate(playerOffsetX, playerOffsetY);
     ctx.rotate(player.dir); // Angle in radians
     if (player.id == myId) {ctx.drawImage(carBlueSpr, -carBlueSpr.width / 2, -carBlueSpr.height / 2)} else {ctx.drawImage(carRedSpr, -carBlueSpr.width / 2, -carBlueSpr.height / 2)}
     ctx.rotate(-player.dir); // Angle in radians
-    ctx.translate(-player.x, -player.y);
+    ctx.translate(-playerOffsetX, -playerOffsetY);
 }

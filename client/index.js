@@ -60,7 +60,7 @@ function checkWindow() {
         wWIDTH = window.innerWidth
         wHEIGHT = window.innerHeight
 
-        let canvasFact = wHEIGHT / 240
+        canvasFact = wHEIGHT / 240
 
         if (400 * canvasFact < wWIDTH) {
             canvas.width = wWIDTH
@@ -75,8 +75,14 @@ function checkWindow() {
     }
 }
 
+function setOffset() {
+    offsetX = PLAYER_LIST[myId].x - ((canvas.width / 2) / canvasFact)
+    offsetY = PLAYER_LIST[myId].y - ((canvas.height / 2) / canvasFact)
+}
+
 function update() {
     checkWindow()
+    setOffset()
     checkKeyStates()
     updateKeyStates()
     sendInfo()
@@ -87,6 +93,7 @@ function update() {
 
 function draw() {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    ctx.drawImage(trackSimple, -offsetX, -offsetY);
     drawCars()
 }
 
