@@ -91,8 +91,8 @@ function checkWindowKeepInside() {
 }
 
 function update() {
-    // checkWindow()
-    checkWindowKeepInside();
+    checkWindow()
+    //checkWindowKeepInside();
     checkKeyStates()
     updateKeyStates()
     sendInfo()
