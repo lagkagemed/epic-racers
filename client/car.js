@@ -5,7 +5,6 @@ function carUpdate(player)
     const speedForwardsMax = 3;
     const speedBackwardsMax = 1;
     const turnSpeed = 0.05;
-    const turnResistanceMax = 2;
 
     // Kør frem og tilbage
     if (player.pressingUp)
@@ -31,7 +30,7 @@ function carUpdate(player)
     // Drej
     if (player.speed < -acc || player.speed > acc)
     {
-        let turnResistance = turnResistanceMax - Math.abs(player.speed / speedForwardsMax);
+        let turnResistance = 2 - Math.abs(player.speed / speedForwardsMax);
     
         if (player.pressingLeft) 
         {
