@@ -35,3 +35,6 @@ trackSimpleCol.src = './client/assets/track_simple_col.png';
 trackSimpleCol.addEventListener("load", function(){
     loadColDataArray(trackSimpleCol)
 });
+
+let trackCool = new Image();
+trackCool.src = './client/assets/track_cool.png';

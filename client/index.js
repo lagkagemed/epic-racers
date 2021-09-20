@@ -103,7 +103,7 @@ function update() {
 
 function draw() {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.drawImage(trackSimple, -offsetX, -offsetY);
+    ctx.drawImage(trackCool, -offsetX, -offsetY);
     drawCars()
 }
 
