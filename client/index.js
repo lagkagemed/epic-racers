@@ -95,6 +95,8 @@ function update() {
     updateKeyStates()
     sendInfo()
     //consoleLog()
+    //let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
+    //console.log(collisionDataArray[indexCol])
     updateCars()
 }
 

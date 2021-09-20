@@ -27,3 +27,11 @@ carRedSpr.src = './client/assets/car_red.png';
 
 let trackSimple = new Image();
 trackSimple.src = './client/assets/track_simple.png';
+
+
+let trackSimpleCol = new Image();
+trackSimpleCol.src = './client/assets/track_simple_col.png';
+
+trackSimpleCol.addEventListener("load", function(){
+    loadColDataArray(trackSimpleCol)
+});
