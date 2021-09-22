@@ -83,11 +83,11 @@ function drag(e) {
             oldRight = true;
         }
 
-        if (touchY < (wHEIGHT / 3 * 2)) {
+        if (touchY < (wHEIGHT / 3 * 2 && touchX > (wWIDTH / 10) && touchX < (wWIDTH / 10 * 9))) {
             pressingUp = true;
             oldUp = true;
         }
-        else {
+        else if (touchY > (wHEIGHT / 3 * 2 && touchX > (wWIDTH / 10) && touchX < (wWIDTH / 10 * 9))) {
             pressingDown = true
             oldDown = true;
         }
