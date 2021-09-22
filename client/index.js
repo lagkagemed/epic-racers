@@ -1,3 +1,6 @@
+import { carUpdate } from './car.js'
+import { carDraw } from './car.js'
+
 let socket = io();
 
 socket.on('yourId',function(data){
@@ -29,6 +32,10 @@ socket.on('newPositions',function(data){
         }
     }
 });
+
+socket.on('cheater',function(){
+    alert("We don't want no cheatin' around here!")
+})
 
 function updateKeyStates() {
     if (Object.keys(PLAYER_LIST).length != 0) {

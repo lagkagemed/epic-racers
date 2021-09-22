@@ -1,4 +1,4 @@
-function carUpdate(player)
+export function carUpdate(player)
 {
     const acc = 0.1;
     const deacc = 0.04;
@@ -60,7 +60,8 @@ function carUpdate(player)
         */
 }
 
-function carDraw(player)
+
+export function carDraw(player)
 {
     let playerOffsetX = player.x + (offsetX * -1)
     let playerOffsetY = player.y + (offsetY * -1)

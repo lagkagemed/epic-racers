@@ -5,6 +5,8 @@ import { dirname } from 'path';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
 
+import { carUpdate } from './client/car.js'
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -53,31 +55,45 @@ io.sockets.on('connection', function(socket){
 
     socket.on('movement',function(data){
         if (data != null) {
-            console.log(data)
-            player.x = data.x
-            player.y = data.y
-            player.dir = data.dir
+            if (data.speed < 3.1) {
+                let timeSince = Math.floor((data.ts - player.ts) / 20 )
+                for (let i = 0; i < timeSince; i++) {
+                    carUpdate(player);
+                }
 
-            player.pressingUp = data.pressingUp;
-            player.pressingDown = data.pressingDown;
-            player.pressingLeft = data.pressingLeft;
-            player.pressingRight = data.pressingRight;
+                if (player.x - data.x < 5 && player.x - data.x > -5 && player.y - data.y < 5 && player.y - data.y > -5) {
+                    player.x = data.x
+                    player.y = data.y
+                    player.dir = data.dir
 
-            player.speed = data.speed;
-            player.ts = data.ts;
+                    player.pressingUp = data.pressingUp;
+                    player.pressingDown = data.pressingDown;
+                    player.pressingLeft = data.pressingLeft;
+                    player.pressingRight = data.pressingRight;
 
-            posPack.push({
-                x:player.x,
-                y:player.y,
-                dir:player.dir,
-                id:player.id,
-                pressingUp:player.pressingUp,
-                pressingDown:player.pressingDown,
-                pressingLeft:player.pressingLeft,
-                pressingRight:player.pressingRight,
-                speed:player.speed,
-                ts:player.ts
-            });
+                    player.speed = data.speed;
+                    player.ts = data.ts;
+
+                    posPack.push({
+                        x:player.x,
+                        y:player.y,
+                        dir:player.dir,
+                        id:player.id,
+                        pressingUp:player.pressingUp,
+                        pressingDown:player.pressingDown,
+                        pressingLeft:player.pressingLeft,
+                        pressingRight:player.pressingRight,
+                        speed:player.speed,
+                        ts:player.ts
+                    });
+                } else {
+                    socket.emit('cheater');
+                    console.log('We have a cheater over here. :(')
+                }
+            } else {
+                socket.emit('cheater');
+                console.log('We have a cheater over here. :(')
+            }
         }
     })
 
