@@ -51,6 +51,9 @@ io.sockets.on('connection', function(socket){
     console.log('Socket connected!');
 
     socket.emit('yourId', socket.id)
+
+    socket.emit('time', Date.now())
+    
     emitAll('playerUpdate', PLAYER_LIST)
 
     socket.on('movement',function(data){

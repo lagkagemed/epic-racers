@@ -8,6 +8,10 @@ socket.on('playerUpdate', function(data){
     PLAYER_LIST = data;
 })
 
+socket.on('time', function(data){
+    timeFact = data - Date.now()
+})
+
 socket.on('newPositions',function(data){
     for(let i = 0 ; i < data.length; i++) {
         if (myId != data[i].id) {
@@ -22,12 +26,12 @@ socket.on('newPositions',function(data){
             player.speed = data[i].speed
             player.ts = data[i].ts
 
-            /*
-            let timeSince = Math.floor((Date.now() - player.ts) / 20 )
+            
+            let timeSince = Math.floor((Date.now() + timeFact - player.ts) / 20 )
             for (let i = 0; i < timeSince; i++) {
                 carUpdate(player);
             }
-            */
+            
         }
     }
 });
@@ -47,7 +51,7 @@ function updateKeyStates() {
 
 function sendInfo() {
     if (sendNewInfo) {
-        PLAYER_LIST[myId].ts = Date.now()
+        PLAYER_LIST[myId].ts = Date.now() + timeFact
         socket.emit('movement', PLAYER_LIST[myId])
         sendNewInfo = false
     }

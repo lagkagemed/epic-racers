@@ -18,6 +18,7 @@ let canvasFact;
 let PLAYER_LIST = {}
 let myId = 0
 let sendNewNew = false;
+let timeFact = 0;
 
 // Car sprites
 var carBlueSpr = new Image();
