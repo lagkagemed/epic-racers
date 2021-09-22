@@ -22,10 +22,12 @@ socket.on('newPositions',function(data){
             player.speed = data[i].speed
             player.ts = data[i].ts
 
+            /*
             let timeSince = Math.floor((Date.now() - player.ts) / 20 )
             for (let i = 0; i < timeSince; i++) {
                 carUpdate(player);
             }
+            */
         }
     }
 });

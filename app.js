@@ -56,12 +56,14 @@ io.sockets.on('connection', function(socket){
     socket.on('movement',function(data){
         if (data != null) {
             if (data.speed < 3.1) {
+                console.log(data)
                 let timeSince = Math.floor((data.ts - player.ts) / 20 )
                 for (let i = 0; i < timeSince; i++) {
                     carUpdate(player);
                 }
+                //console.log(player.x - data.x)
 
-                if (player.x - data.x < 5 && player.x - data.x > -5 && player.y - data.y < 5 && player.y - data.y > -5) {
+                if (player.x - data.x < 20 && player.x - data.x > -20 && player.y - data.y < 20 && player.y - data.y > -20) {
                     player.x = data.x
                     player.y = data.y
                     player.dir = data.dir
