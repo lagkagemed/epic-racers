@@ -20,7 +20,12 @@ socket.on('newPositions',function(data){
             player.pressingLeft = data[i].pressingLeft
             player.pressingRight = data[i].pressingRight
             player.speed = data[i].speed
-            player.acc = data[i].acc
+            player.ts = data[i].ts
+
+            let timeSince = Math.floor((Date.now() - player.ts) / 20 )
+            for (let i = 0; i < timeSince; i++) {
+                carUpdate(player);
+            }
         }
     }
 });
@@ -36,6 +41,7 @@ function updateKeyStates() {
 
 function sendInfo() {
     if (sendNewInfo) {
+        PLAYER_LIST[myId].ts = Date.now()
         socket.emit('movement', PLAYER_LIST[myId])
         sendNewInfo = false
     }

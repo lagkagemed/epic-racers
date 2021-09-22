@@ -41,7 +41,7 @@ io.sockets.on('connection', function(socket){
     player.pressingRight = false;
 
     player.speed = 0;
-    player.acc = 0;
+    player.ts = Date.now()
 
     SOCKET_LIST[socket.id] = socket;
     PLAYER_LIST[player.id] = player;
@@ -64,7 +64,7 @@ io.sockets.on('connection', function(socket){
             player.pressingRight = data.pressingRight;
 
             player.speed = data.speed;
-            player.acc = data.acc;
+            player.ts = data.ts;
 
             posPack.push({
                 x:player.x,
@@ -76,7 +76,7 @@ io.sockets.on('connection', function(socket){
                 pressingLeft:player.pressingLeft,
                 pressingRight:player.pressingRight,
                 speed:player.speed,
-                acc:player.acc
+                ts:player.ts
             });
         }
     })
