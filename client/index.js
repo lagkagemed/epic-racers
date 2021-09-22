@@ -1,6 +1,3 @@
-import { carUpdate } from './car.js'
-import { carDraw } from './car.js'
-
 let socket = io();
 
 socket.on('yourId',function(data){

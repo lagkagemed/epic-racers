@@ -1,4 +1,4 @@
-function carUpdate(player)
+export function carUpdate(player)
 {
     const acc = 0.1;
     const deacc = 0.04;
@@ -58,17 +58,4 @@ function carUpdate(player)
     if (player.y < 0 - 16)
         player.y += gameH + 32;
         */
-}
-
-
-
-function carDraw(player)
-{
-    let playerOffsetX = player.x + (offsetX * -1)
-    let playerOffsetY = player.y + (offsetY * -1)
-    ctx.translate(playerOffsetX, playerOffsetY);
-    ctx.rotate(player.dir); // Angle in radians
-    if (player.id == myId) {ctx.drawImage(carBlueSpr, -carBlueSpr.width / 2, -carBlueSpr.height / 2)} else {ctx.drawImage(carRedSpr, -carBlueSpr.width / 2, -carBlueSpr.height / 2)}
-    ctx.rotate(-player.dir); // Angle in radians
-    ctx.translate(-playerOffsetX, -playerOffsetY);
 }

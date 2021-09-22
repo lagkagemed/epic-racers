@@ -5,7 +5,7 @@ import { dirname } from 'path';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
 
-import { carUpdate } from './client/car.js'
+import { carUpdate } from './server/car.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
