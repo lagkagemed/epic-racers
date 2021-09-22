@@ -16,6 +16,7 @@ let offsetY = 0;
 let canvasFact;
 
 let PLAYER_LIST = {}
+let FOLLOWER_LIST = {}
 let myId = 0
 let sendNewNew = false;
 let timeFact = 0;

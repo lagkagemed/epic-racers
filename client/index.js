@@ -6,6 +6,16 @@ socket.on('yourId',function(data){
 
 socket.on('playerUpdate', function(data){
     PLAYER_LIST = data;
+    FOLLOWER_LIST = {}
+    for (let i in PLAYER_LIST) {
+        let player = PLAYER_LIST[i]
+        let follower = {}
+        follower.id = player.id
+        follower.x = player.x
+        follower.y = player.y
+        follower.dir = player.dir
+        FOLLOWER_LIST[player.id] = follower
+    }
 })
 
 socket.on('time', function(data){
@@ -60,14 +70,16 @@ function sendInfo() {
 function updateCars() {
     for (let i in PLAYER_LIST) {
         let player = PLAYER_LIST[i]
+        let follower = FOLLOWER_LIST[i]
         carUpdate(player);
+        carUpdateFollower(player, follower);
     }
 }
 
 function drawCars() {
-    for (let i in PLAYER_LIST) {
-        let player = PLAYER_LIST[i]
-        carDraw(player);
+    for (let i in FOLLOWER_LIST) {
+        let follower = FOLLOWER_LIST[i]
+        carDraw(follower);
     }
 }
 

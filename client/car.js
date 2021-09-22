@@ -60,6 +60,33 @@ function carUpdate(player)
         */
 }
 
+function carUpdateFollower(player, follower) {
+    follower.dir = player.dir
+    let followFact = 1.2
+    let maxRng = 50
+    let minRng = 5
+    let diffX = follower.x - player.x
+    let diffY = follower.y - player.y
+
+    if (diffX < 0) diffX * -1
+    if (diffY < 0) diffY * -1
+
+    if (diffX + diffY > maxRng || diffX + diffY < minRng) {
+        follower.x = player.x
+        follower.y = player.y
+    } else {
+        if (follower.x - player.x < 0) 
+        follower.x += player.speed * followFact 
+        else
+        follower.x -= player.speed * followFact 
+
+        if (follower.y - player.y < 0) 
+        follower.y += player.speed * followFact 
+        else
+        follower.y -= player.speed * followFact 
+    }
+}
+
 
 
 function carDraw(player)
