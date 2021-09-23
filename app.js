@@ -65,8 +65,9 @@ io.sockets.on('connection', function(socket){
                     carUpdate(player);
                 }
                 //console.log(player.x - data.x)
+                let cheatFact = 50
 
-                if (player.x - data.x < 20 && player.x - data.x > -20 && player.y - data.y < 20 && player.y - data.y > -20) {
+                if (player.x - data.x < cheatFact && player.x - data.x > -cheatFact && player.y - data.y < cheatFact && player.y - data.y > -cheatFact) {
                     player.x = data.x
                     player.y = data.y
                     player.dir = data.dir
