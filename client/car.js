@@ -64,7 +64,7 @@ function carUpdateFollower(player, follower) {
     follower.dir = player.dir
     let followFact = 1.2
     let maxRng = 50
-    let minRng = 10
+    let minRng = 6
     let diffX = follower.x - player.x
     let diffY = follower.y - player.y
 

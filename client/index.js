@@ -19,7 +19,7 @@ socket.on('playerUpdate', function(data){
 })
 
 socket.on('time', function(data){
-    timeFact = data - Date.now()
+    timeFact = data - Date.now() - 40
 })
 
 socket.on('newPositions',function(data){
