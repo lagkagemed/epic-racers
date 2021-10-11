@@ -98,20 +98,20 @@ function update() {
     updateKeyStates()
     sendInfo()
     //consoleLog()
-    //let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
-    //console.log(collisionDataArray[indexCol])
+    let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
+    console.log(collisionDataArray[indexCol])
     updateCars()
 }
 
 
 function draw() {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    ctx.drawImage(trackCool, -offsetX, -offsetY);
+    ctx.drawImage(trackSimple, -offsetX, -offsetY);
     drawCars()
 }
 
 function setDeltaT() {
-    deltat = (t + performance.now()) / 10
+    deltat = (t + performance.now()) / 20
     t = -1 * performance.now()
 }
 
