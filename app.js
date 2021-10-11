@@ -1,4 +1,4 @@
-//express setup, Dette er en test!
+//express setup, Dette er en test! Dette er test 2!
 import express from 'express';
 import * as http from 'http';
 import { dirname } from 'path';
