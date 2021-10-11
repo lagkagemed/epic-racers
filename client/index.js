@@ -91,6 +91,7 @@ function consoleLog() {
 }
 
 function update() {
+    setDeltaT()
     checkWindow()
     setOffset()
     checkKeyStates()
@@ -109,7 +110,10 @@ function draw() {
     drawCars()
 }
 
-
+function setDeltaT() {
+    deltat = (t + performance.now()) / 10
+    t = -1 * performance.now()
+}
 
 setInterval(function(){
     update()

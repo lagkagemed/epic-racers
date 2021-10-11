@@ -15,6 +15,9 @@ let offsetX = 0;
 let offsetY = 0;
 let canvasFact;
 
+let t = performance.now()
+let deltat = 10
+
 let PLAYER_LIST = {}
 let myId = 0
 let sendNewNew = false;
