@@ -44,6 +44,7 @@ io.sockets.on('connection', function(socket){
     player.acc = 0;
 
     player.drowning = false
+    player.scale = 1
 
     SOCKET_LIST[socket.id] = socket;
     PLAYER_LIST[player.id] = player;
@@ -68,6 +69,7 @@ io.sockets.on('connection', function(socket){
             player.speed = data.speed;
             player.acc = data.acc;
             player.drowning = data.drowning
+            player.scale = data.scale
 
             posPack.push({
                 x:player.x,
@@ -80,7 +82,8 @@ io.sockets.on('connection', function(socket){
                 pressingRight:player.pressingRight,
                 speed:player.speed,
                 acc:player.acc,
-                drowning:player.drowning
+                drowning:player.drowning,
+                scale:player.scale
             });
         }
     })

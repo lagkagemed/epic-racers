@@ -24,6 +24,7 @@ socket.on('newPositions',function(data){
             player.speed = data[i].speed
             player.acc = data[i].acc
             player.drowning = data[i].drowning
+            player.scale = data[i].scale
         }
     }
 });
@@ -47,7 +48,14 @@ function sendInfo() {
 function updateCars() {
     for (let i in PLAYER_LIST) {
         let player = PLAYER_LIST[i]
-        if (!player.drowning) carUpdate(player);
+        if (player.scale <= 0) {
+            player.scale = 1
+            player.x = 50
+            player.y = 50
+            player.drowning = false
+            player.speed = 0;
+        }
+        carUpdate(player);
     }
 }
 

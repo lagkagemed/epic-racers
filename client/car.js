@@ -7,12 +7,12 @@ function carUpdate(player)
     const turnSpeed = 0.05;
 
     // Kør frem og tilbage
-    if (player.pressingUp)
+    if (player.pressingUp && !player.drowning)
     {
         if (player.speed < speedForwardsMax)
             player.speed += acc;
     }
-    else if (player.pressingDown)
+    else if (player.pressingDown && !player.drowning)
     {
         if (player.speed > -speedBackwardsMax)
             player.speed -= acc; 
@@ -32,12 +32,12 @@ function carUpdate(player)
     {
         let turnResistance = 2 - Math.abs(player.speed / speedForwardsMax);
     
-        if (player.pressingLeft) 
+        if (player.pressingLeft && !player.drowning) 
         {
             player.dir -= turnSpeed * turnResistance;
         }
     
-        if (player.pressingRight)
+        if (player.pressingRight && !player.drowning)
         {
             player.dir += turnSpeed * turnResistance;
         }
@@ -62,11 +62,12 @@ function carUpdate(player)
 
 function carDraw(player)
 {
+    if (player.drowning && player.scale > 0) player.scale = player.scale - 0.04
     let playerOffsetX = player.x + (offsetX * -1)
     let playerOffsetY = player.y + (offsetY * -1)
     ctx.translate(playerOffsetX, playerOffsetY);
     ctx.rotate(player.dir); // Angle in radians
-    if (player.id == myId) {ctx.drawImage(carBlueSpr, -carBlueSpr.width / 2, -carBlueSpr.height / 2)} else {ctx.drawImage(carRedSpr, -carBlueSpr.width / 2, -carBlueSpr.height / 2)}
+    if (player.id == myId) {ctx.drawImage(carBlueSpr, -carBlueSpr.width / 2 * player.scale, -carBlueSpr.height / 2 * player.scale, carBlueSpr.width * player.scale, carBlueSpr.height * player.scale)} else {ctx.drawImage(carRedSpr, -carBlueSpr.width / 2 * player.scale, -carBlueSpr.height / 2 * player.scale, carBlueSpr.width * player.scale, carBlueSpr.height * player.scale)}
     ctx.rotate(-player.dir); // Angle in radians
     ctx.translate(-playerOffsetX, -playerOffsetY);
 }
