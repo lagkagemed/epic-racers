@@ -36,7 +36,7 @@ trackSimple.src = './client/assets/track_island.png';
 
 
 let trackSimpleCol = new Image();
-trackSimpleCol.src = './client/assets/track_island.png';
+trackSimpleCol.src = './client/assets/track_island_col.png';
 
 trackSimpleCol.addEventListener("load", function(){
     loadColDataArray(trackSimpleCol)
