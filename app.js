@@ -30,8 +30,8 @@ io.sockets.on('connection', function(socket){
     socket.id = Math.random();
 
     let player = {}
-    player.x = 100
-    player.y = 100
+    player.x = 50
+    player.y = 50
     player.dir = 0
     player.id = socket.id
 
@@ -42,6 +42,8 @@ io.sockets.on('connection', function(socket){
 
     player.speed = 0;
     player.acc = 0;
+
+    player.drowning = false
 
     SOCKET_LIST[socket.id] = socket;
     PLAYER_LIST[player.id] = player;
@@ -65,6 +67,7 @@ io.sockets.on('connection', function(socket){
 
             player.speed = data.speed;
             player.acc = data.acc;
+            player.drowning = data.drowning
 
             posPack.push({
                 x:player.x,
@@ -76,7 +79,8 @@ io.sockets.on('connection', function(socket){
                 pressingLeft:player.pressingLeft,
                 pressingRight:player.pressingRight,
                 speed:player.speed,
-                acc:player.acc
+                acc:player.acc,
+                drowning:player.drowning
             });
         }
     })

@@ -23,6 +23,7 @@ socket.on('newPositions',function(data){
             player.pressingRight = data[i].pressingRight
             player.speed = data[i].speed
             player.acc = data[i].acc
+            player.drowning = data[i].drowning
         }
     }
 });
@@ -46,7 +47,7 @@ function sendInfo() {
 function updateCars() {
     for (let i in PLAYER_LIST) {
         let player = PLAYER_LIST[i]
-        carUpdate(player);
+        if (!player.drowning) carUpdate(player);
     }
 }
 
@@ -100,12 +101,18 @@ function update() {
     //consoleLog()
     let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
     console.log(collisionDataArray[indexCol])
+    if (collisionDataArray[indexCol] == '#99d9ea' && !PLAYER_LIST[myId].drowning) {
+        PLAYER_LIST[myId].drowning = true;
+        sendNewInfo = true;
+    }
     updateCars()
 }
 
 
 function draw() {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    ctx.fillStyle = 'rgb(153, 217, 234)'
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     ctx.drawImage(trackSimple, -offsetX, -offsetY);
     drawCars()
 }

@@ -8,6 +8,9 @@ const ctx = canvas.getContext("2d")
 ctx.imageSmoothingEnabled = false
 ctx.webkitImageSmoothingEnabled = false
 
+let drowning = false
+let drowningCooldown = 0
+
 let wWIDTH = 0
 let wHEIGHT = 0
 
@@ -29,11 +32,11 @@ var carRedSpr = new Image();
 carRedSpr.src = './client/assets/car_red.png';
 
 let trackSimple = new Image();
-trackSimple.src = './client/assets/track_simple.png';
+trackSimple.src = './client/assets/track_island.png';
 
 
 let trackSimpleCol = new Image();
-trackSimpleCol.src = './client/assets/track_simple_col.png';
+trackSimpleCol.src = './client/assets/track_island.png';
 
 trackSimpleCol.addEventListener("load", function(){
     loadColDataArray(trackSimpleCol)
