@@ -11,23 +11,30 @@ socket.on('playerUpdate', function(data){
 })
 
 socket.on('newPositions',function(data){
-    for(let i = 0 ; i < data.length; i++) {
-        if (myId != data[i].id) {
-            let player = PLAYER_LIST[data[i].id]
-            player.x = data[i].x
-            player.y = data[i].y
-            player.dir = data[i].dir
-            player.pressingUp = data[i].pressingUp
-            player.pressingDown = data[i].pressingDown
-            player.pressingLeft = data[i].pressingLeft
-            player.pressingRight = data[i].pressingRight
-            player.speed = data[i].speed
-            player.acc = data[i].acc
-            player.drowning = data[i].drowning
-            player.scale = data[i].scale
+    let playerData = data.posPack
+    if (playerData != []) {
+        for(let i = 0 ; i < playerData.length; i++) {
+            if (myId != playerData[i].id) {
+                let player = PLAYER_LIST[playerData[i].id]
+                player.x = playerData[i].x
+                player.y = playerData[i].y
+                player.dir = playerData[i].dir
+                player.pressingUp = playerData[i].pressingUp
+                player.pressingDown = playerData[i].pressingDown
+                player.pressingLeft = playerData[i].pressingLeft
+                player.pressingRight = playerData[i].pressingRight
+                player.speed = playerData[i].speed
+                player.acc = playerData[i].acc
+                player.drowning = playerData[i].drowning
+                player.scale = playerData[i].scale
+            }
         }
     }
 });
+
+socket.on('NPCUpdate',function(data){
+    NPC_LIST = data
+})
 
 function updateKeyStates() {
     if (Object.keys(PLAYER_LIST).length != 0) {
@@ -42,6 +49,28 @@ function sendInfo() {
     if (sendNewInfo) {
         socket.emit('movement', PLAYER_LIST[myId])
         sendNewInfo = false
+    }
+}
+
+function updateNPCs() {
+    for (let i = 0; i < NPC_LIST.length; i++) {
+        let NPC = NPC_LIST[i]
+        switch(NPC.type) {
+            case 0:
+                //Ferry
+                Ferry.update(NPC)
+        }
+    }
+}
+
+function drawNPCs() {
+    for (let i = 0; i < NPC_LIST.length; i++) {
+        let NPC = NPC_LIST[i]
+        switch(NPC.type) {
+            case 0:
+                //Ferry
+                Ferry.draw(NPC, ctx, offsetX, offsetY)
+        }
     }
 }
 
@@ -99,6 +128,28 @@ function consoleLog() {
     socket.emit('touch',pack)
 }
 
+function checkCollision() {
+    let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
+    //console.log(collisionDataArray[indexCol])
+    if (collisionDataArray[indexCol] == '#99d9ea' && !PLAYER_LIST[myId].drowning) {
+        let onFerry = false
+        for (let i = 0; i < NPC_LIST.length; i++) {
+            let NPC = NPC_LIST[i]
+            let player = PLAYER_LIST[myId]
+            if (NPC.type == 0 && player.x >= NPC.x && player.x <= (NPC.x + ferrySpr.width) && player.y >= NPC.y && player.y <= (NPC.y + ferrySpr.height)) {
+                onFerry = true;
+                player.x += Math.cos(NPC.dir) * NPC.spd;
+                player.y += Math.sin(NPC.dir) * NPC.spd;
+                console.log(onFerry)
+            }
+        }
+        if (!onFerry) {
+            PLAYER_LIST[myId].drowning = true;
+            sendNewInfo = true;
+        }
+    }
+}
+
 function update() {
     setDeltaT()
     checkWindow()
@@ -107,12 +158,8 @@ function update() {
     updateKeyStates()
     sendInfo()
     //consoleLog()
-    let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
-    console.log(collisionDataArray[indexCol])
-    if (collisionDataArray[indexCol] == '#99d9ea' && !PLAYER_LIST[myId].drowning) {
-        PLAYER_LIST[myId].drowning = true;
-        sendNewInfo = true;
-    }
+    checkCollision()
+    updateNPCs()
     updateCars()
 }
 
@@ -122,6 +169,7 @@ function draw() {
     ctx.fillStyle = 'rgb(153, 217, 234)'
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     ctx.drawImage(trackSimple, -offsetX, -offsetY);
+    drawNPCs()
     drawCars()
 }
 

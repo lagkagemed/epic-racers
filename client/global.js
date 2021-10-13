@@ -22,6 +22,7 @@ let t = performance.now()
 let deltat = 10
 
 let PLAYER_LIST = {}
+let NPC_LIST = {}
 let myId = 0
 let sendNewNew = false;
 
@@ -30,6 +31,9 @@ var carBlueSpr = new Image();
 carBlueSpr.src = './client/assets/car_blue.png';
 var carRedSpr = new Image();
 carRedSpr.src = './client/assets/car_red.png';
+
+let ferrySpr = new Image();
+ferrySpr.src = './client/assets/ferry.png';
 
 let trackSimple = new Image();
 trackSimple.src = './client/assets/track_island.png';

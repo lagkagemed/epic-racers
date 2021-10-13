@@ -5,6 +5,10 @@ import { dirname } from 'path';
 import { Server } from 'socket.io';
 import { fileURLToPath } from 'url';
 
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+let Ferry = require('./client/ferry.cjs');
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -21,8 +25,12 @@ console.log('Server started.');
 
 let SOCKET_LIST = {}
 let PLAYER_LIST = {}
+let NPC_LIST = []
 
-let posPack = []
+NPC_LIST.push(Ferry.new(360,80,[{x:720,y:200},{x:360,y:80}], 200, 0.01))
+
+let dataPack = {}
+dataPack.posPack = []
 
 let io = new Server(serv);
 
@@ -53,6 +61,7 @@ io.sockets.on('connection', function(socket){
 
     socket.emit('yourId', socket.id)
     emitAll('playerUpdate', PLAYER_LIST)
+    socket.emit('NPCUpdate', NPC_LIST)
 
     socket.on('movement',function(data){
         if (data != null) {
@@ -71,7 +80,7 @@ io.sockets.on('connection', function(socket){
             player.drowning = data.drowning
             player.scale = data.scale
 
-            posPack.push({
+            dataPack.posPack.push({
                 x:player.x,
                 y:player.y,
                 dir:player.dir,
@@ -108,7 +117,7 @@ function emitAll(msg, data) {
 }
 
 setInterval(function(){
-    if (posPack != []) emitAll('newPositions', posPack)
+    if (dataPack.posPack != []) emitAll('newPositions', dataPack)
 
-    posPack = []
+    dataPack.posPack = []
 },1000/25);
