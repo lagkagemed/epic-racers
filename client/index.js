@@ -131,18 +131,18 @@ function consoleLog() {
 function checkCollision() {
     let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
     //console.log(collisionDataArray[indexCol])
-    if (collisionDataArray[indexCol] == '#99d9ea' && !PLAYER_LIST[myId].drowning) {
-        let onFerry = false
-        for (let i = 0; i < NPC_LIST.length; i++) {
-            let NPC = NPC_LIST[i]
-            let player = PLAYER_LIST[myId]
-            if (NPC.type == 0 && player.x >= NPC.x && player.x <= (NPC.x + ferrySpr.width) && player.y >= NPC.y && player.y <= (NPC.y + ferrySpr.height)) {
-                onFerry = true;
-                player.x += Math.cos(NPC.dir) * NPC.spd;
-                player.y += Math.sin(NPC.dir) * NPC.spd;
-                console.log(onFerry)
-            }
+    let onFerry = false
+    for (let i = 0; i < NPC_LIST.length; i++) {
+        let NPC = NPC_LIST[i]
+        let player = PLAYER_LIST[myId]
+        if (NPC.type == 0 && player.x >= NPC.x && player.x <= (NPC.x + ferrySpr.width) && player.y >= NPC.y && player.y <= (NPC.y + ferrySpr.height)) {
+            onFerry = true;
+            player.x += Math.cos(NPC.dir) * NPC.spd;
+            player.y += Math.sin(NPC.dir) * NPC.spd;
+            console.log(onFerry)
         }
+    }
+    if (collisionDataArray[indexCol] == '#99d9ea' && !PLAYER_LIST[myId].drowning) {
         if (!onFerry) {
             PLAYER_LIST[myId].drowning = true;
             sendNewInfo = true;
