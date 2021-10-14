@@ -27,7 +27,7 @@ let SOCKET_LIST = {}
 let PLAYER_LIST = {}
 let NPC_LIST = []
 
-NPC_LIST.push(Ferry.new(360,80,[{x:720,y:200},{x:360,y:80}], 200, 0.01))
+NPC_LIST.push(Ferry.new(360,80,[{x:500,y:200},{x:360,y:80}], 200, 1, NPC_LIST.length))
 
 let dataPack = {}
 dataPack.posPack = []

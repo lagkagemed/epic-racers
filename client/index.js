@@ -137,12 +137,18 @@ function checkCollision() {
         let player = PLAYER_LIST[myId]
         if (NPC.type == 0 && player.x >= NPC.x && player.x <= (NPC.x + ferrySpr.width) && player.y >= NPC.y && player.y <= (NPC.y + ferrySpr.height)) {
             onFerry = true;
-            player.x += Math.cos(NPC.dir) * NPC.spd;
-            player.y += Math.sin(NPC.dir) * NPC.spd;
-            console.log(onFerry)
+            if (NPC.waitCount == 0) {
+                player.x += Math.cos(NPC.dir) * NPC.spd;
+                player.y += Math.sin(NPC.dir) * NPC.spd;
+            }
         }
     }
-    if (collisionDataArray[indexCol] == '#99d9ea' && !PLAYER_LIST[myId].drowning) {
+    if (PLAYER_LIST[myId].x > trackSimple.width || PLAYER_LIST[myId].y > trackSimple.height || PLAYER_LIST[myId].x < 0 || PLAYER_LIST[myId].y < 0) {
+        if (!onFerry) {
+            PLAYER_LIST[myId].drowning = true;
+            sendNewInfo = true;
+        }
+    } else if (collisionDataArray[indexCol] == '#99d9ea' && !PLAYER_LIST[myId].drowning) {
         if (!onFerry) {
             PLAYER_LIST[myId].drowning = true;
             sendNewInfo = true;
