@@ -142,7 +142,7 @@ function checkCollision() {
             let NPC = NPC_LIST.FERRIES[i]
             let player = PLAYER_LIST[a]
             if (player.x >= NPC.x && player.x <= (NPC.x + ferrySpr.width) && player.y >= NPC.y && player.y <= (NPC.y + ferrySpr.height)) {
-                onFerry = true;
+                if (player.id == myId) onFerry = true;
                 if (NPC.waitCount == 0) {
                     player.x += Math.cos(NPC.dir) * NPC.spd;
                     player.y += Math.sin(NPC.dir) * NPC.spd;
