@@ -30,6 +30,18 @@ socket.on('newPositions',function(data){
             }
         }
     }
+    let ferryData = data.ferryPack
+    if (ferryData != []) {
+        for (let i = 0; i < ferryData.length; i++) {
+            let newFerry = ferryData[i]
+            let oldFerry = NPC_LIST.FERRIES[newFerry.id]
+
+            oldFerry.x = newFerry.x
+            oldFerry.y = newFerry.y
+            oldFerry.dest = newFerry.dest
+            oldFerry.waitCount = newFerry.wC
+        }
+    }
 });
 
 socket.on('NPCUpdate',function(data){
@@ -53,24 +65,17 @@ function sendInfo() {
 }
 
 function updateNPCs() {
-    for (let i = 0; i < NPC_LIST.length; i++) {
-        let NPC = NPC_LIST[i]
-        switch(NPC.type) {
-            case 0:
-                //Ferry
-                Ferry.update(NPC)
-        }
+    for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
+        let NPC = NPC_LIST.FERRIES[i]
+            Ferry.update(NPC, false, [])
     }
 }
 
 function drawNPCs() {
-    for (let i = 0; i < NPC_LIST.length; i++) {
-        let NPC = NPC_LIST[i]
-        switch(NPC.type) {
-            case 0:
-                //Ferry
-                Ferry.draw(NPC, ctx, offsetX, offsetY)
-        }
+    for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
+        let NPC = NPC_LIST.FERRIES[i]
+            //Ferry
+            Ferry.draw(NPC, ctx, offsetX, offsetY)
     }
 }
 
@@ -132,14 +137,16 @@ function checkCollision() {
     let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
     //console.log(collisionDataArray[indexCol])
     let onFerry = false
-    for (let i = 0; i < NPC_LIST.length; i++) {
-        let NPC = NPC_LIST[i]
-        let player = PLAYER_LIST[myId]
-        if (NPC.type == 0 && player.x >= NPC.x && player.x <= (NPC.x + ferrySpr.width) && player.y >= NPC.y && player.y <= (NPC.y + ferrySpr.height)) {
-            onFerry = true;
-            if (NPC.waitCount == 0) {
-                player.x += Math.cos(NPC.dir) * NPC.spd;
-                player.y += Math.sin(NPC.dir) * NPC.spd;
+    for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
+        for (let a in PLAYER_LIST) {
+            let NPC = NPC_LIST.FERRIES[i]
+            let player = PLAYER_LIST[a]
+            if (player.x >= NPC.x && player.x <= (NPC.x + ferrySpr.width) && player.y >= NPC.y && player.y <= (NPC.y + ferrySpr.height)) {
+                onFerry = true;
+                if (NPC.waitCount == 0) {
+                    player.x += Math.cos(NPC.dir) * NPC.spd;
+                    player.y += Math.sin(NPC.dir) * NPC.spd;
+                }
             }
         }
     }

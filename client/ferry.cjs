@@ -3,7 +3,7 @@
      exports.new = function(x, y, destArr, waitTime, spd, id) {
           let self = {}
           self.id = id
-          self.type = 0
+          self.update = false
           self.x = x
           self.y = y
           self.destArr = destArr
@@ -15,7 +15,8 @@
           return self
      }
 
-     exports.update = function(ferry){
+     exports.update = function(ferry, server, pack){
+
 
           let destX = ferry.destArr[ferry.dest].x
           let destY = ferry.destArr[ferry.dest].y
@@ -24,6 +25,9 @@
                ferry.waitCount = ferry.waitTime
                ferry.dest++
                if (ferry.dest == ferry.destArr.length) ferry.dest = 0
+               if (server) {
+                    pack.push({x: ferry.x, y: ferry.y, dest: ferry.dest, wC: ferry.waitCount, id:ferry.id})
+               }
           }
 
           if (ferry.waitCount == 0) {

@@ -25,12 +25,14 @@ console.log('Server started.');
 
 let SOCKET_LIST = {}
 let PLAYER_LIST = {}
-let NPC_LIST = []
+let NPC_LIST = {}
+NPC_LIST.FERRIES = []
 
-NPC_LIST.push(Ferry.new(360,80,[{x:500,y:200},{x:360,y:80}], 200, 1, NPC_LIST.length))
+NPC_LIST.FERRIES.push(Ferry.new(360,80,[{x:500,y:200},{x:360,y:80}], 200, 1, NPC_LIST.FERRIES.length))
 
 let dataPack = {}
 dataPack.posPack = []
+dataPack.ferryPack = []
 
 let io = new Server(serv);
 
@@ -117,7 +119,17 @@ function emitAll(msg, data) {
 }
 
 setInterval(function(){
-    if (dataPack.posPack != []) emitAll('newPositions', dataPack)
+    for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
+        let ferry = NPC_LIST.FERRIES[i]
+        Ferry.update(ferry, true, dataPack.ferryPack)
+        Ferry.update(ferry, true, dataPack.ferryPack)
+    }
+    let dataToSend = false
+
+    if (dataPack.posPack != []) dataToSend = true
+    if (dataPack.ferryPack != []) dataToSend = true
+    if (dataToSend) emitAll('newPositions', dataPack)
 
     dataPack.posPack = []
+    dataPack.ferryPack = []
 },1000/25);
