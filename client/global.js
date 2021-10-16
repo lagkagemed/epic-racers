@@ -27,7 +27,8 @@ let myId = 0
 let sendNewNew = false;
 
 let checkPoints = [];
-let checkPointActiveIndex = 0;
+let checkPointActiveIndex = -1;
+let sendNewCheckPoint = false;
 
 // Car sprites
 var carBlueSpr = new Image();

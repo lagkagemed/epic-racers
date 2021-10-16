@@ -1,8 +1,8 @@
 class CheckPoint {
-    constructor(x, y, active = false) {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.active = active;
+        this.active = false;
     }
 
     draw(offsetX, offsetY) {
@@ -29,5 +29,21 @@ class CheckPoint {
     }
 }
 
-checkPoints.push(new CheckPoint(50, 50, true));
+function checkPointSetActive(index) {
+    for (let i = 0; i < checkPoints.length; i++) {
+        checkPoints[i].active = false;
+    }
+
+    if (index >= 0)
+    {
+        checkPoints[index].active = true;
+        checkPointActiveIndex = index;
+    }
+    else
+    {
+        checkPointActiveIndex = -1;
+    }
+}
+
+checkPoints.push(new CheckPoint(310, 170));
 checkPoints.push(new CheckPoint(670, 230));

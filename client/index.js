@@ -49,11 +49,7 @@ socket.on('NPCUpdate',function(data){
 })
 
 socket.on('checkPointActiveIndex',function(data){
-    for (let i = 0; i < checkPoints.length; i++) {
-        checkPoints[i].active = false;
-    }
-    checkPoints[data].active = true;
-    checkPointActiveIndex = data;
+    checkPointSetActive(data);
 });
 
 function updateKeyStates() {
@@ -69,6 +65,11 @@ function sendInfo() {
     if (sendNewInfo) {
         socket.emit('movement', PLAYER_LIST[myId])
         sendNewInfo = false
+    }
+    if (sendNewCheckPoint)
+    {
+        socket.emit('checkPointActiveIndex', checkPointActiveIndex);
+        sendNewCheckPoint = false;
     }
 }
 
@@ -102,8 +103,16 @@ function updateCars() {
         let player = PLAYER_LIST[i]
         if (player.scale <= 0) {
             player.scale = 1
-            player.x = checkPoints[checkPointActiveIndex].x;
-            player.y = checkPoints[checkPointActiveIndex].y;
+            if (checkPointActiveIndex >= 0)
+            {
+                player.x = checkPoints[checkPointActiveIndex].x;
+                player.y = checkPoints[checkPointActiveIndex].y;
+            }
+            else
+            {
+                player.x = 50;
+                player.y = 50;
+            }
             player.drowning = false
             player.speed = 0;
         }
@@ -190,12 +199,8 @@ function checkCollision() {
                 if (Math.abs(PLAYER_LIST[myId].x - checkPoints[i].x) < 10 &&
                     Math.abs(PLAYER_LIST[myId].y - checkPoints[i].y) < 10)
                 {
-                    for (let e = 0; e < checkPoints.length; e++) {
-                        checkPoints[e].active = false;
-                    }
-                    checkPoints[i].active = true;
-                    checkPointActiveIndex = i;
-                    socket.emit('checkPointActiveIndex', i);
+                    checkPointSetActive(i);
+                    sendNewCheckPoint = true;
                     break;
                 }
             }

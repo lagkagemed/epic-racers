@@ -34,6 +34,8 @@ let dataPack = {}
 dataPack.posPack = []
 dataPack.ferryPack = []
 
+let checkPointActiveIndex = -1;
+
 let io = new Server(serv);
 
 io.sockets.on('connection', function(socket){
@@ -64,6 +66,8 @@ io.sockets.on('connection', function(socket){
     socket.emit('yourId', socket.id)
     emitAll('playerUpdate', PLAYER_LIST)
     socket.emit('NPCUpdate', NPC_LIST)
+
+    socket.emit('checkPointActiveIndex', checkPointActiveIndex);
 
     socket.on('movement',function(data){
         if (data != null) {
@@ -111,7 +115,8 @@ io.sockets.on('connection', function(socket){
     });
 
     socket.on('checkPointActiveIndex',function(data){
-        emitAll('checkPointActiveIndex', data);
+        checkPointActiveIndex = data;
+        emitAll('checkPointActiveIndex', checkPointActiveIndex);
     });
 });
 
