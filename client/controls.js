@@ -21,36 +21,17 @@ const btnLEFT = 37;
 const btnRIGHT = 39;
 
 function logKeyDown(e) {
-    // if (e.keyCode == btnUP) pressingUp = true
-    if (e.keyCode == btnDOWN)
+    if (e.keyCode == btnUP) pressingUp = true
+    if (e.keyCode == btnDOWN) pressingDown = true
+    if (e.keyCode == btnLEFT)
     {
-        pressingDown = true
-
-        if (e.keyCode == btnLEFT)
-        {
-            pressingLeft = true
-        }
-        if (e.keyCode == btnRIGHT)
-        {
-            pressingRight = true
-        }
+        pressingLeft = true
+        if (!pressingDown) pressingUp = true
     }
-    else
+    if (e.keyCode == btnRIGHT)
     {
-        if (e.keyCode == btnUP)
-        {
-            if (!pressingDown) pressingUp = true
-        }
-        if (e.keyCode == btnLEFT)
-        {
-            pressingLeft = true
-            if (!pressingDown) pressingUp = true
-        }
-        if (e.keyCode == btnRIGHT)
-        {
-            pressingRight = true
-            if (!pressingDown) pressingUp = true
-        }
+        pressingRight = true
+        if (!pressingDown) pressingUp = true
     }
 }
 
@@ -82,7 +63,6 @@ function logKeyUp(e) {
         haveSentUp = false
         sendNewInfo = true
     }
-
 }
 
 canvas.addEventListener('touchstart', drag, false)
