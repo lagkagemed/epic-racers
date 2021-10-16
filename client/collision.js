@@ -37,6 +37,69 @@ function loadColDataArray(track) {
 
     }
 
-    console.log(collisionDataArray)
+    //console.log(collisionDataArray)
 
+}
+
+function checkCollision() {
+    if (typeof PLAYER_LIST[myId] !== 'undefined') {
+        let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
+        //console.log(collisionDataArray[indexCol])
+        let onFerry = false
+        for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
+            for (let a in PLAYER_LIST) {
+                let NPC = NPC_LIST.FERRIES[i]
+                let player = PLAYER_LIST[a]
+                if (player.x >= NPC.x && player.x <= (NPC.x + ferrySpr.width) && player.y >= NPC.y && player.y <= (NPC.y + ferrySpr.height)) {
+                    if (player.id == myId) onFerry = true;
+                    if (NPC.waitCount == 0) {
+                        player.x += Math.cos(NPC.dir) * NPC.spd;
+                        player.y += Math.sin(NPC.dir) * NPC.spd;
+                    }
+                }
+            }
+        }
+        for (let i in PLAYER_LIST) {
+            PLAYER_LIST[i].gettingPushed = false
+        }
+        for (let i = 0; i < NPC_LIST.BULLDOZERS.length; i++) {
+            for (let a in PLAYER_LIST) {
+                let NPC = NPC_LIST.BULLDOZERS[i]
+                let player = PLAYER_LIST[a]
+                if (player.x + carBlueSpr.width / 2 >= NPC.x - bullDSpr.width / 2 && player.x - carBlueSpr.width / 2 <= NPC.x + bullDSpr.width / 2 && player.y + carBlueSpr.height / 2 >= NPC.y - bullDSpr.height / 2 && player.y - carBlueSpr.height / 2 <= NPC.y + bullDSpr.height / 2) {
+                    if (!player.drowning) {
+                        player.speed = 0
+                        player.x += Math.cos(NPC.dir) * NPC.spd;
+                        player.y += Math.sin(NPC.dir) * NPC.spd;
+                        player.gettingPushed = true
+                    }
+                }
+            }
+        }
+        if (PLAYER_LIST[myId].x > trackSimple.width || PLAYER_LIST[myId].y > trackSimple.height || PLAYER_LIST[myId].x < 0 || PLAYER_LIST[myId].y < 0) {
+            if (!onFerry) {
+                PLAYER_LIST[myId].drowning = true;
+                sendNewInfo = true;
+            }
+        } else if (collisionDataArray[indexCol] == '#99d9ea' && !PLAYER_LIST[myId].drowning) {
+            if (!onFerry) {
+                PLAYER_LIST[myId].drowning = true;
+                sendNewInfo = true;
+            }
+        }
+
+        // Check Point
+        for (let i = 0; i < checkPoints.length; i++) {
+            if (!checkPoints[i].active)
+            {
+                if (Math.abs(PLAYER_LIST[myId].x - checkPoints[i].x) < 10 &&
+                    Math.abs(PLAYER_LIST[myId].y - checkPoints[i].y) < 10)
+                {
+                    checkPointSetActive(i);
+                    sendNewCheckPoint = true;
+                    break;
+                }
+            }
+        }
+    }
 }

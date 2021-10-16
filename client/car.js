@@ -44,8 +44,8 @@ function carUpdate(player)
     }
 
     // Sæt ny position
-    player.x += Math.cos(player.dir) * player.speed;
-    player.y += Math.sin(player.dir) * player.speed;
+    if (!player.gettingPushed) player.x += Math.cos(player.dir) * player.speed;
+    if (!player.gettingPushed) player.y += Math.sin(player.dir) * player.speed;
 
     /*
     // Wrap rundt når man kører ud af skærm

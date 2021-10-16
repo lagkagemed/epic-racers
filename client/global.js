@@ -10,6 +10,7 @@ ctx.webkitImageSmoothingEnabled = false
 
 let drowning = false
 let drowningCooldown = 0
+let gettingPushed = false
 
 let wWIDTH = 0
 let wHEIGHT = 0
@@ -35,6 +36,9 @@ var carBlueSpr = new Image();
 carBlueSpr.src = './client/assets/car_blue.png';
 var carRedSpr = new Image();
 carRedSpr.src = './client/assets/car_red.png';
+
+let bullDSpr = new Image();
+bullDSpr.src = './client/assets/car_bulldozer.png';
 
 var checkPointActiveSpr = new Image();
 checkPointActiveSpr.src = './client/assets/check_point_active.png';

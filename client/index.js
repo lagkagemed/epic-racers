@@ -27,6 +27,7 @@ socket.on('newPositions',function(data){
                 player.acc = playerData[i].acc
                 player.drowning = playerData[i].drowning
                 player.scale = playerData[i].scale
+                player.gettingPushed = playerData[i].gettingPushed
             }
         }
     }
@@ -40,6 +41,18 @@ socket.on('newPositions',function(data){
             oldFerry.y = newFerry.y
             oldFerry.dest = newFerry.dest
             oldFerry.waitCount = newFerry.wC
+        }
+    }
+    let bullDData = data.bullDPack
+    if (bullDData != []) {
+        for (let i = 0; i < bullDData.length; i++) {
+            let newBullD = bullDData[i]
+            let oldBullD = NPC_LIST.BULLDOZERS[newBullD.id]
+
+            oldBullD.x = newBullD.x
+            oldBullD.y = newBullD.y
+            oldBullD.dest = newBullD.dest
+            oldBullD.waitCount = newBullD.wC
         }
     }
 });
@@ -86,6 +99,12 @@ function updateNPCs() {
                 Ferry.update(NPC, false, [])
         }
     }
+    if (typeof NPC_LIST.BULLDOZERS !== 'undefined') {
+        for (let i = 0; i < NPC_LIST.BULLDOZERS.length; i++) {
+            let NPC = NPC_LIST.BULLDOZERS[i]
+                Bulldozer.update(Ferry, NPC, false, [])
+        }
+    }
 }
 
 function drawNPCs() {
@@ -94,6 +113,13 @@ function drawNPCs() {
             let NPC = NPC_LIST.FERRIES[i]
                 //Ferry
                 Ferry.draw(NPC, ctx, offsetX, offsetY)
+        }
+    }
+    if (typeof NPC_LIST.BULLDOZERS !== 'undefined') {
+        for (let i = 0; i < NPC_LIST.BULLDOZERS.length; i++) {
+            let NPC = NPC_LIST.BULLDOZERS[i]
+                //Ferry
+                Bulldozer.draw(NPC, ctx, offsetX, offsetY)
         }
     }
 }
@@ -114,6 +140,7 @@ function updateCars() {
                 player.y = 50;
             }
             player.drowning = false
+            player.gettingPushed = false
             player.speed = 0;
         }
         carUpdate(player);
@@ -160,52 +187,6 @@ function consoleLog() {
     pack.push(sendNewInfo)
 
     socket.emit('touch',pack)
-}
-
-function checkCollision() {
-    if (typeof PLAYER_LIST[myId] !== 'undefined') {
-        let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
-        //console.log(collisionDataArray[indexCol])
-        let onFerry = false
-        for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
-            for (let a in PLAYER_LIST) {
-                let NPC = NPC_LIST.FERRIES[i]
-                let player = PLAYER_LIST[a]
-                if (player.x >= NPC.x && player.x <= (NPC.x + ferrySpr.width) && player.y >= NPC.y && player.y <= (NPC.y + ferrySpr.height)) {
-                    if (player.id == myId) onFerry = true;
-                    if (NPC.waitCount == 0) {
-                        player.x += Math.cos(NPC.dir) * NPC.spd;
-                        player.y += Math.sin(NPC.dir) * NPC.spd;
-                    }
-                }
-            }
-        }
-        if (PLAYER_LIST[myId].x > trackSimple.width || PLAYER_LIST[myId].y > trackSimple.height || PLAYER_LIST[myId].x < 0 || PLAYER_LIST[myId].y < 0) {
-            if (!onFerry) {
-                PLAYER_LIST[myId].drowning = true;
-                sendNewInfo = true;
-            }
-        } else if (collisionDataArray[indexCol] == '#99d9ea' && !PLAYER_LIST[myId].drowning) {
-            if (!onFerry) {
-                PLAYER_LIST[myId].drowning = true;
-                sendNewInfo = true;
-            }
-        }
-
-        // Check Point
-        for (let i = 0; i < checkPoints.length; i++) {
-            if (!checkPoints[i].active)
-            {
-                if (Math.abs(PLAYER_LIST[myId].x - checkPoints[i].x) < 10 &&
-                    Math.abs(PLAYER_LIST[myId].y - checkPoints[i].y) < 10)
-                {
-                    checkPointSetActive(i);
-                    sendNewCheckPoint = true;
-                    break;
-                }
-            }
-        }
-    }
 }
 
 function update() {

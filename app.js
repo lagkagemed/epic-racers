@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 let Ferry = require('./client/ferry.cjs');
+let Bulldozer = require('./client/bulldozer.cjs');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -27,12 +28,17 @@ let SOCKET_LIST = {}
 let PLAYER_LIST = {}
 let NPC_LIST = {}
 NPC_LIST.FERRIES = []
+NPC_LIST.BULLDOZERS = []
 
 NPC_LIST.FERRIES.push(Ferry.new(360,80,[{x:500,y:200},{x:360,y:80}], 200, 1, NPC_LIST.FERRIES.length))
+
+NPC_LIST.BULLDOZERS.push(Bulldozer.new(Ferry,115,140,[{x:115,y:195},{x:115,y:135}], 50, 1, NPC_LIST.BULLDOZERS.length))
+console.log(NPC_LIST)
 
 let dataPack = {}
 dataPack.posPack = []
 dataPack.ferryPack = []
+dataPack.bullDPack = []
 
 let checkPointActiveIndex = -1;
 
@@ -57,6 +63,7 @@ io.sockets.on('connection', function(socket){
 
     player.drowning = false
     player.scale = 1
+    player.gettingPushed = false
 
     SOCKET_LIST[socket.id] = socket;
     PLAYER_LIST[player.id] = player;
@@ -85,6 +92,7 @@ io.sockets.on('connection', function(socket){
             player.acc = data.acc;
             player.drowning = data.drowning
             player.scale = data.scale
+            player.gettingPushed = data.gettingPushed
 
             dataPack.posPack.push({
                 x:player.x,
@@ -98,7 +106,8 @@ io.sockets.on('connection', function(socket){
                 speed:player.speed,
                 acc:player.acc,
                 drowning:player.drowning,
-                scale:player.scale
+                scale:player.scale,
+                gettingPushed:player.gettingPushed
             });
         }
     })
@@ -130,15 +139,23 @@ function emitAll(msg, data) {
 setInterval(function(){
     for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
         let ferry = NPC_LIST.FERRIES[i]
-        Ferry.update(ferry, true, dataPack.ferryPack) // TODO BB 2021-10-16. Er det med vilje denne køres to gange?
+        Ferry.update(ferry, true, dataPack.ferryPack) // TODO BB 2021-10-16. Er det med vilje denne køres to gange? // KB 2021-10-16. Ja det er med vilje, serveren kører kun halvt så mange frames som clienterne. Måske det kan løses anderledes?
         Ferry.update(ferry, true, dataPack.ferryPack)
+    }
+
+    for (let i = 0; i < NPC_LIST.BULLDOZERS.length; i++) {
+        let bullD = NPC_LIST.BULLDOZERS[i]
+        Bulldozer.update(Ferry, bullD, true, dataPack.bullDPack)
+        Bulldozer.update(Ferry, bullD, true, dataPack.bullDPack)
     }
     let dataToSend = false
 
     if (dataPack.posPack != []) dataToSend = true
     if (dataPack.ferryPack != []) dataToSend = true
+    if (dataPack.bullDPack != []) dataToSend = true
     if (dataToSend) emitAll('newPositions', dataPack)
 
     dataPack.posPack = []
     dataPack.ferryPack = []
+    dataPack.bullDPack = []
 },1000/25);
