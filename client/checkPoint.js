@@ -30,5 +30,4 @@ class CheckPoint {
 }
 
 checkPoints.push(new CheckPoint(50, 50, true));
-checkPoints.push(new CheckPoint(50, 150));
 checkPoints.push(new CheckPoint(670, 230));
