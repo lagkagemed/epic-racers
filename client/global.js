@@ -26,11 +26,19 @@ let NPC_LIST = {}
 let myId = 0
 let sendNewNew = false;
 
+let checkPoints = [];
+let checkPointActiveIndex = 0;
+
 // Car sprites
 var carBlueSpr = new Image();
 carBlueSpr.src = './client/assets/car_blue.png';
 var carRedSpr = new Image();
 carRedSpr.src = './client/assets/car_red.png';
+
+var checkPointActiveSpr = new Image();
+checkPointActiveSpr.src = './client/assets/check_point_active.png';
+var checkPointInactiveSpr = new Image();
+checkPointInactiveSpr.src = './client/assets/check_point_inactive.png';
 
 let ferrySpr = new Image();
 ferrySpr.src = './client/assets/ferry.png';

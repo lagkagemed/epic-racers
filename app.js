@@ -109,6 +109,10 @@ io.sockets.on('connection', function(socket){
         emitAll('playerUpdate', PLAYER_LIST)
         console.log('Socket disconnected');
     });
+
+    socket.on('checkPointActiveIndex',function(data){
+        emitAll('checkPointActiveIndex', data);
+    });
 });
 
 function emitAll(msg, data) {
@@ -121,7 +125,7 @@ function emitAll(msg, data) {
 setInterval(function(){
     for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
         let ferry = NPC_LIST.FERRIES[i]
-        Ferry.update(ferry, true, dataPack.ferryPack)
+        Ferry.update(ferry, true, dataPack.ferryPack) // TODO BB 2021-10-16. Er det med vilje denne køres to gange?
         Ferry.update(ferry, true, dataPack.ferryPack)
     }
     let dataToSend = false
