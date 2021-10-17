@@ -52,6 +52,7 @@ io.sockets.on('connection', function(socket){
     player.y = 50
     player.dir = 0
     player.id = socket.id
+    player.color = 0
 
     player.pressingUp = false;
     player.pressingDown = false;
@@ -82,6 +83,7 @@ io.sockets.on('connection', function(socket){
             player.x = data.x
             player.y = data.y
             player.dir = data.dir
+            player.color = data.color
 
             player.pressingUp = data.pressingUp;
             player.pressingDown = data.pressingDown;
@@ -99,6 +101,7 @@ io.sockets.on('connection', function(socket){
                 y:player.y,
                 dir:player.dir,
                 id:player.id,
+                color:player.color,
                 pressingUp:player.pressingUp,
                 pressingDown:player.pressingDown,
                 pressingLeft:player.pressingLeft,

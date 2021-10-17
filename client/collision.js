@@ -44,8 +44,20 @@ function loadColDataArray(track) {
 function checkCollision() {
     if (typeof PLAYER_LIST[myId] !== 'undefined') {
         let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
-        //console.log(collisionDataArray[indexCol])
+        console.log(collisionDataArray[indexCol])
         let onFerry = false
+        if (collisionDataArray[indexCol] == '#ff2b3c' && PLAYER_LIST[myId].color != 0) {
+            PLAYER_LIST[myId].color = 0
+            sendNewInfo = true
+        }
+        if (collisionDataArray[indexCol] == '#70ff9b' && PLAYER_LIST[myId].color != 1) {
+            PLAYER_LIST[myId].color = 1
+            sendNewInfo = true
+        }
+        if (collisionDataArray[indexCol] == '#2b47ff' && PLAYER_LIST[myId].color != 2) {
+            PLAYER_LIST[myId].color = 2
+            sendNewInfo = true
+        }
         for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
             for (let a in PLAYER_LIST) {
                 let NPC = NPC_LIST.FERRIES[i]

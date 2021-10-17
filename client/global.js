@@ -34,6 +34,9 @@ let sendNewCheckPoint = false;
 // Car sprites
 var carBlueSpr = new Image();
 carBlueSpr.src = './client/assets/car_blue.png';
+carBlueSpr.addEventListener("load", function(){
+    makeColorArray()
+});
 var carRedSpr = new Image();
 carRedSpr.src = './client/assets/car_red.png';
 

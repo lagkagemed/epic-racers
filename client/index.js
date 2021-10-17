@@ -19,6 +19,7 @@ socket.on('newPositions',function(data){
                 player.x = playerData[i].x
                 player.y = playerData[i].y
                 player.dir = playerData[i].dir
+                player.color = playerData[i].color
                 player.pressingUp = playerData[i].pressingUp
                 player.pressingDown = playerData[i].pressingDown
                 player.pressingLeft = playerData[i].pressingLeft

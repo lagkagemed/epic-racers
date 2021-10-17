@@ -67,7 +67,8 @@ function carDraw(player)
     let playerOffsetY = player.y + (offsetY * -1)
     ctx.translate(playerOffsetX, playerOffsetY);
     ctx.rotate(player.dir); // Angle in radians
-    if (player.id == myId) {ctx.drawImage(carBlueSpr, -carBlueSpr.width / 2 * player.scale, -carBlueSpr.height / 2 * player.scale, carBlueSpr.width * player.scale, carBlueSpr.height * player.scale)} else {ctx.drawImage(carRedSpr, -carBlueSpr.width / 2 * player.scale, -carBlueSpr.height / 2 * player.scale, carBlueSpr.width * player.scale, carBlueSpr.height * player.scale)}
+    //if (player.id == myId) {ctx.drawImage(carBlueSpr, -carBlueSpr.width / 2 * player.scale, -carBlueSpr.height / 2 * player.scale, carBlueSpr.width * player.scale, carBlueSpr.height * player.scale)} else {ctx.drawImage(carRedSpr, -carBlueSpr.width / 2 * player.scale, -carBlueSpr.height / 2 * player.scale, carBlueSpr.width * player.scale, carBlueSpr.height * player.scale)}
+    ctx.drawImage(carSprArr[player.color], -carBlueSpr.width / 2 * player.scale, -carBlueSpr.height / 2 * player.scale, carBlueSpr.width * player.scale, carBlueSpr.height * player.scale)
     ctx.rotate(-player.dir); // Angle in radians
     ctx.translate(-playerOffsetX, -playerOffsetY);
 }
