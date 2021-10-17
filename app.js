@@ -142,7 +142,7 @@ function emitAll(msg, data) {
 setInterval(function(){
     for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
         let ferry = NPC_LIST.FERRIES[i]
-        Ferry.update(ferry, true, dataPack.ferryPack) // TODO BB 2021-10-16. Er det med vilje denne køres to gange? // KB 2021-10-16. Ja det er med vilje, serveren kører kun halvt så mange frames som clienterne. Måske det kan løses anderledes?
+        Ferry.update(ferry, true, dataPack.ferryPack)
         Ferry.update(ferry, true, dataPack.ferryPack)
     }
 

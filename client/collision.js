@@ -107,8 +107,8 @@ function checkCollision() {
                 if (Math.abs(PLAYER_LIST[myId].x - checkPoints[i].x) < 10 &&
                     Math.abs(PLAYER_LIST[myId].y - checkPoints[i].y) < 10)
                 {
-                    checkPointSetActive(i);
-                    sendNewCheckPoint = true;
+                    if (checkPointSetActive(i))
+                        sendNewCheckPoint = true;
                     break;
                 }
             }

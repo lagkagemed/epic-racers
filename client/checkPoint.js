@@ -30,20 +30,26 @@ class CheckPoint {
 }
 
 function checkPointSetActive(index) {
-    for (let i = 0; i < checkPoints.length; i++) {
-        checkPoints[i].active = false;
-    }
-
     if (index >= 0)
     {
-        checkPoints[index].active = true;
-        checkPointActiveIndex = index;
+        if (index > checkPointActiveIndex)
+        {
+            for (let i = 0; i < checkPoints.length; i++) {
+                checkPoints[i].active = false;
+            }        
+            checkPoints[index].active = true;
+            checkPointActiveIndex = index;   
+            return true;
+        }
     }
     else
     {
         checkPointActiveIndex = -1;
     }
+
+    return false;
 }
 
+checkPoints.push(new CheckPoint(50, 150));
 checkPoints.push(new CheckPoint(310, 170));
 checkPoints.push(new CheckPoint(670, 230));

@@ -23,16 +23,8 @@ const btnRIGHT = 39;
 function logKeyDown(e) {
     if (e.keyCode == btnUP) pressingUp = true
     if (e.keyCode == btnDOWN) pressingDown = true
-    if (e.keyCode == btnLEFT)
-    {
-        pressingLeft = true
-        if (!pressingDown) pressingUp = true
-    }
-    if (e.keyCode == btnRIGHT)
-    {
-        pressingRight = true
-        if (!pressingDown) pressingUp = true
-    }
+    if (e.keyCode == btnLEFT) pressingLeft = true
+    if (e.keyCode == btnRIGHT) pressingRight = true
 }
 
 function logKeyUp(e) {
@@ -51,16 +43,12 @@ function logKeyUp(e) {
     if (e.keyCode == btnLEFT) {
         pressingLeft = false
         haveSentLeft = false
-        pressingUp = false
-        haveSentUp = false
         sendNewInfo = true
     }
 
     if (e.keyCode == btnRIGHT) {
         pressingRight = false
         haveSentRight = false
-        pressingUp = false
-        haveSentUp = false
         sendNewInfo = true
     }
 }
