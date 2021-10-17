@@ -6,6 +6,13 @@ function carUpdate(player)
     const speedBackwardsMax = 1;
     const turnSpeed = 0.05;
 
+    // Kør når man trykker til siden (som på tablet)
+    if (player.pressingLeft || player.pressingRight)
+    {
+        if (!player.pressingDown)
+            player.pressingUp = true;
+    }
+
     // Kør frem og tilbage
     if (player.pressingUp && !player.drowning)
     {
