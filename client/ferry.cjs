@@ -22,7 +22,7 @@
 
           if (ferry.x > destX - ferry.spd && ferry.x < destX + ferry.spd && ferry.y > destY - ferry.spd && ferry.y < destY + ferry.spd && ferry.waitCount == 0) {
                ferry.waitCount = ferry.destArr[ferry.dest].waitTime
-               console.log(ferry.destArr[ferry.dest].waitTime)
+               //console.log(ferry.destArr[ferry.dest].waitTime)
                ferry.dest++
                if (ferry.dest == ferry.destArr.length) ferry.dest = 0
                if (server) {

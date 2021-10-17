@@ -44,7 +44,7 @@ function loadColDataArray(track) {
 function checkCollision() {
     if (typeof PLAYER_LIST[myId] !== 'undefined') {
         let indexCol = trackSimpleCol.width * Math.floor(PLAYER_LIST[myId].y) + Math.floor(PLAYER_LIST[myId].x)
-        console.log(collisionDataArray[indexCol])
+        //console.log(collisionDataArray[indexCol])
         let onFerry = false
         if (collisionDataArray[indexCol] == '#ff2b3c' && PLAYER_LIST[myId].color != 0) {
             PLAYER_LIST[myId].color = 0

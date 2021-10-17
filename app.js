@@ -32,7 +32,10 @@ NPC_LIST.BULLDOZERS = []
 
 NPC_LIST.FERRIES.push(Ferry.new(360,80,[{x:500,y:200,waitTime:200},{x:360,y:80,waitTime:200}], 1, NPC_LIST.FERRIES.length))
 
+NPC_LIST.FERRIES.push(Ferry.new(-60,50,[{x:-160,y:250,waitTime:0},{x:200,y:250,waitTime:0},{x:-160,y:250,waitTime:0},{x:-60,y:50,waitTime:200}], 1, NPC_LIST.FERRIES.length))
+
 NPC_LIST.BULLDOZERS.push(Bulldozer.new(Ferry,115,140,[{x:115,y:195,waitTime:50},{x:115,y:135,waitTime:50}], 1, NPC_LIST.BULLDOZERS.length))
+NPC_LIST.BULLDOZERS.push(Bulldozer.new(Ferry,150,0,[{x:150,y:50,waitTime:50},{x:150,y:0,waitTime:50}], 1, NPC_LIST.BULLDOZERS.length))
 console.log(NPC_LIST)
 
 let dataPack = {}
