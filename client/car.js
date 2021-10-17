@@ -41,12 +41,18 @@ function carUpdate(player)
     
         if (player.pressingLeft && !player.drowning) 
         {
-            player.dir -= turnSpeed * turnResistance;
+            if (player.speed > acc)
+                player.dir -= turnSpeed * turnResistance;
+            else if (player.speed < -acc)
+                player.dir += turnSpeed * turnResistance;
         }
     
         if (player.pressingRight && !player.drowning)
         {
-            player.dir += turnSpeed * turnResistance;
+            if (player.speed > acc)
+                player.dir += turnSpeed * turnResistance;
+            else if (player.speed < -acc)
+                player.dir -= turnSpeed * turnResistance;
         }
     }
 
