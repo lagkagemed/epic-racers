@@ -1,11 +1,7 @@
 (function(exports){
 
-    exports.new = function(Ferry, x, y, destArr, waitTime, spd, id) {
-         let self = Ferry.new(x,y,destArr, waitTime, spd, id)
-         self.update = false
-         self.dest = 0;
-         self.waitCount = waitTime
-         self.dir = 0
+    exports.new = function(Ferry, x, y, destArr, spd, id) {
+         let self = Ferry.new(x,y,destArr, spd, id)
          return self
     }
 

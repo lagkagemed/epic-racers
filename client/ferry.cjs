@@ -1,6 +1,6 @@
 (function(exports){
 
-     exports.new = function(x, y, destArr, waitTime, spd, id) {
+     exports.new = function(x, y, destArr, spd, id) {
           let self = {}
           self.id = id
           self.update = false
@@ -8,8 +8,7 @@
           self.y = y
           self.destArr = destArr
           self.dest = 0;
-          self.waitTime = waitTime
-          self.waitCount = waitTime
+          self.waitCount = destArr[self.dest].waitTime
           self.spd = spd
           self.dir = 0
           return self
@@ -22,7 +21,8 @@
           let destY = ferry.destArr[ferry.dest].y
 
           if (ferry.x > destX - ferry.spd && ferry.x < destX + ferry.spd && ferry.y > destY - ferry.spd && ferry.y < destY + ferry.spd && ferry.waitCount == 0) {
-               ferry.waitCount = ferry.waitTime
+               ferry.waitCount = ferry.destArr[ferry.dest].waitTime
+               console.log(ferry.destArr[ferry.dest].waitTime)
                ferry.dest++
                if (ferry.dest == ferry.destArr.length) ferry.dest = 0
                if (server) {
