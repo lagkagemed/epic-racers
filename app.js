@@ -9,6 +9,7 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 let Ferry = require('./client/ferry.cjs');
 let Bulldozer = require('./client/bulldozer.cjs');
+let Box = require('./client/box.cjs');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -29,6 +30,7 @@ let PLAYER_LIST = {}
 let NPC_LIST = {}
 NPC_LIST.FERRIES = []
 NPC_LIST.BULLDOZERS = []
+NPC_LIST.BOXES = []
 
 NPC_LIST.FERRIES.push(Ferry.new(360,80,[{x:500,y:200,waitTime:200},{x:360,y:80,waitTime:200}], 1, NPC_LIST.FERRIES.length))
 
@@ -36,12 +38,15 @@ NPC_LIST.FERRIES.push(Ferry.new(-60,50,[{x:-160,y:250,waitTime:0},{x:200,y:250,w
 
 NPC_LIST.BULLDOZERS.push(Bulldozer.new(Ferry,115,140,[{x:115,y:195,waitTime:50},{x:115,y:135,waitTime:50}], 1, NPC_LIST.BULLDOZERS.length))
 NPC_LIST.BULLDOZERS.push(Bulldozer.new(Ferry,150,0,[{x:150,y:50,waitTime:50},{x:150,y:0,waitTime:50}], 1, NPC_LIST.BULLDOZERS.length))
+
+NPC_LIST.BOXES.push(Box.new(60,60,NPC_LIST.BOXES.length))
 console.log(NPC_LIST)
 
 let dataPack = {}
 dataPack.posPack = []
 dataPack.ferryPack = []
 dataPack.bullDPack = []
+dataPack.boxPack = []
 
 let checkPointActiveIndex = -1;
 
@@ -122,6 +127,12 @@ io.sockets.on('connection', function(socket){
         //console.log(data)
     })
 
+    socket.on('newTorque',function(data){
+        let box = NPC_LIST.BOXES[data.id]
+        box.torques.push({dir: data.dir, spd: data.spd})
+        dataPack.boxPack.push({x: box.x, y: box.y, dir: box.dir, torques: box.torques, id:box.id})
+    });
+
     socket.on('disconnect',function(){
         delete SOCKET_LIST[socket.id];
         delete PLAYER_LIST[player.id];
@@ -143,6 +154,12 @@ function emitAll(msg, data) {
 }
 
 setInterval(function(){
+    for (let i = 0; i < NPC_LIST.BOXES.length; i++) {
+        let box = NPC_LIST.BOXES[i]
+        Box.update(box, true, dataPack.boxPack)
+        Box.update(box, true, dataPack.boxPack)
+    }
+
     for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
         let ferry = NPC_LIST.FERRIES[i]
         Ferry.update(ferry, true, dataPack.ferryPack)
@@ -159,9 +176,11 @@ setInterval(function(){
     if (dataPack.posPack != []) dataToSend = true
     if (dataPack.ferryPack != []) dataToSend = true
     if (dataPack.bullDPack != []) dataToSend = true
+    if (dataPack.boxPack != []) dataToSend = true
     if (dataToSend) emitAll('newPositions', dataPack)
 
     dataPack.posPack = []
     dataPack.ferryPack = []
     dataPack.bullDPack = []
+    dataPack.boxPack = []
 },1000/25);

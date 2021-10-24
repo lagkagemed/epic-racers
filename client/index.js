@@ -56,6 +56,19 @@ socket.on('newPositions',function(data){
             oldBullD.waitCount = newBullD.wC
         }
     }
+    let boxData = data.boxPack
+    if (boxData != []) {
+        for (let i = 0; i < boxData.length; i++) {
+            let newBox = boxData[i]
+            let oldBox = NPC_LIST.BOXES[newBox.id]
+
+            oldBox.x = newBox.x
+            oldBox.y = newBox.y
+            oldBox.dir = newBox.dir
+            oldBox.torques = newBox.torques
+        }
+        torqueToSend = []
+    }
 });
 
 socket.on('NPCUpdate',function(data){
@@ -85,6 +98,10 @@ function sendInfo() {
         socket.emit('checkPointActiveIndex', checkPointActiveIndex);
         sendNewCheckPoint = false;
     }
+    if (torqueToSend.length > 0 && !haveSentTorque) {
+        haveSentTorque = true
+        socket.emit('newTorque', torqueToSend[0])
+    }
 }
 
 function drawCheckPoints() {
@@ -106,21 +123,31 @@ function updateNPCs() {
                 Bulldozer.update(Ferry, NPC, false, [])
         }
     }
+    if (typeof NPC_LIST.BOXES !== 'undefined') {
+        for (let i = 0; i < NPC_LIST.BOXES.length; i++) {
+            let NPC = NPC_LIST.BOXES[i]
+                Box.update(NPC, false, [])
+        }
+    }
 }
 
 function drawNPCs() {
     if (typeof NPC_LIST.FERRIES !== 'undefined') {
         for (let i = 0; i < NPC_LIST.FERRIES.length; i++) {
             let NPC = NPC_LIST.FERRIES[i]
-                //Ferry
                 Ferry.draw(NPC, ctx, offsetX, offsetY)
         }
     }
     if (typeof NPC_LIST.BULLDOZERS !== 'undefined') {
         for (let i = 0; i < NPC_LIST.BULLDOZERS.length; i++) {
             let NPC = NPC_LIST.BULLDOZERS[i]
-                //Ferry
                 Bulldozer.draw(NPC, ctx, offsetX, offsetY)
+        }
+    }
+    if (typeof NPC_LIST.BOXES !== 'undefined') {
+        for (let i = 0; i < NPC_LIST.BOXES.length; i++) {
+            let NPC = NPC_LIST.BOXES[i]
+                Box.draw(NPC, ctx, offsetX, offsetY)
         }
     }
 }

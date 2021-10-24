@@ -26,6 +26,8 @@ let PLAYER_LIST = {}
 let NPC_LIST = {}
 let myId = 0
 let sendNewNew = false;
+let torqueToSend = []
+let haveSentTorque = true
 
 let checkPoints = [];
 let checkPointActiveIndex = -1;
@@ -50,6 +52,9 @@ checkPointInactiveSpr.src = './client/assets/check_point_inactive.png';
 
 let ferrySpr = new Image();
 ferrySpr.src = './client/assets/ferry.png';
+
+let boxSpr = new Image();
+boxSpr.src = './client/assets/box.png';
 
 let trackSimple = new Image();
 trackSimple.src = './client/assets/track_island.png';

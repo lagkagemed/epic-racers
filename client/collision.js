@@ -113,5 +113,18 @@ function checkCollision() {
                 }
             }
         }
+
+        for (let i = 0; i < NPC_LIST.BOXES.length; i++) {
+            let box = NPC_LIST.BOXES[i]
+            let player = PLAYER_LIST[myId]
+            if (Math.abs(player.x - box.x) < (boxSpr.width) &&
+                Math.abs(player.y - box.y) < (boxSpr.height))
+            {
+                if (torqueToSend.length == 0)
+                    torqueToSend.push({spd: player.speed * 1.2, dir: player.dir, id: i})
+                    haveSentTorque = false
+                break;
+            }
+        }
     }
 }
